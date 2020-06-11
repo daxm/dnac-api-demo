@@ -1,17 +1,28 @@
-from dnacentersdk import DNACenterAPI
+from dnacentersdk import DNACenterAPI, AccessTokenError, ApiError
 from ruamel.yaml import YAML
+import urllib3
 import typing
 from pathlib import Path
 
-print("hello world!")
+urllib3.disable_warnings()
 
 
 def main(config: typing.Dict):
-    api = DNACenterAPI(
-        username=config['dnac']['username'],
-        password=config['dnac']['password'],
-        base_url=f"https://{config['dnac']['host']}:443",
-    )
+    api = None
+    try:
+        api = DNACenterAPI(
+            username=config['dnac']['username'],
+            password=config['dnac']['password'],
+            base_url=f"https://{config['dnac']['host']}:443",
+            verify=False,
+        )
+    except AccessTokenError as e:
+        print(f"Probably wrong host or bad credentials.  Error: {e}")
+        exit(1)
+    try:
+        print(api.pnp.get_workflows()[0])
+    except ApiError as e:
+        print(f"Something wrong with your API query.  Error: {e}")
 
 
 if __name__ == "__main__":
