@@ -1,0 +1,64 @@
+---
+module:
+  name: &module "devices"
+  author: &author "cunningr@cisco.com"
+  default_status: &status "disabled"
+  description: "The devices module provides tasks for adding/deleting/provisioning devices to sites in DNA Center using the dnacentersdk"
+  methods:
+    - {"status": *status, "task": "assign_to_site", "stage": 3, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Assigns devices to site"
+    }
+    - {"status": *status, "task": "add_device_role", "stage": 4, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Assigns device roles"
+    }
+    - {"status": *status, "task": "provision_devices", "stage": 5, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Initiates device provisioning"
+    }
+    - {"status": *status, "task": "delete_devices", "stage": 6, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Deletes devices marked as absent"
+    }
+    - {"status": *status, "task": "delete_all", "stage": 6, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Deletes all devices from inventory"
+    }
+  schemas:
+    devices:
+      description: "Used by: assign_to_site, add_device_role, provision_devices, delete_devices"
+      properties:
+        presence:
+          type: string
+          enum: ['present', 'absent']
+        hostname:
+          type: string
+        location:
+          type: string
+        provisionDevice:
+          type: boolean
+        role:
+          type: string
+          enum: ['CORE', 'DISTRIBUTION', 'ACCESS', 'BORDER ROUTER']
+    netlinks:
+      description: "Used by ATAG module for building test CXTA cases"
+      properties:
+        a_device:
+          type: string
+          tref: 'INDIRECT("devices.schema.devices[hostname]")'
+        a_interface:
+          type: string
+        b_device:
+          type: string
+          tref: 'INDIRECT("devices.schema.devices[hostname]")'
+        b_interface:
+          type: string
+  data:
+    devices:
+      - {'presence': 'present', 'hostname': 'Pod6-SharedSvc', 'location': 'Global/US/NC/RTP/Site1', 'provisionDevice': False, 'role': 'CORE'}
+      - {'presence': 'present', 'hostname': 'Pod6-Core', 'location': 'Global/US/NC/RTP/Site1', 'provisionDevice': True, 'role': 'DISTRIBUTION'}
+      - {'presence': 'present', 'hostname': 'Pod6-Edge1', 'location': 'Global/US/NC/RTP/Site1', 'provisionDevice': True, 'role': 'ACCESS'}
+      - {'presence': 'present', 'hostname': 'Pod6-Edge2', 'location': 'Global/US/NC/RTP/Site1', 'provisionDevice': True, 'role': 'ACCESS'}
+    netlinks:
+      - {'a_device': 'Pod6-Edge1', 'a_interface': 'Te1/0/1', 'b_device': 'Pod6-Core', 'b_interface': 'Te1/0/2'}

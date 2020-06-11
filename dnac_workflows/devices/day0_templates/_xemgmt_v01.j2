@@ -1,0 +1,13 @@
+!
+interface GigabitEthernet0/0
+ description Lions Lab Dirty Management IP
+ vrf forwarding Mgmt-vrf
+ ip address {{ item.value.labMgmtIp }} {{ item.value.labMgmtNetmask }}
+ speed 1000
+ negotiation auto
+ no shutdown
+!
+ip http client source-interface Gi0/0
+!
+ip route vrf Mgmt-vrf 0.0.0.0 0.0.0.0 {{ item.value.mgmtIpGw }} name REMOTE_MGMT_STATIONS
+!

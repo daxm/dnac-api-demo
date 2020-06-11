@@ -1,0 +1,29 @@
+{
+    "composite": false, 
+    "containingTemplates": [], 
+    "createTime": 1568816858807, 
+    "description": "", 
+    "deviceTypes": [
+        {
+            "productFamily": "Switches and Hubs", 
+            "productSeries": "Cisco Catalyst 9500 Series Switches"
+        }, 
+        {
+            "productFamily": "Switches and Hubs", 
+            "productSeries": "Cisco Catalyst 9300 Series Switches"
+        }
+    ], 
+    "id": "238c14ab-3d42-46d5-95e3-af16d57f982a", 
+    "lastUpdateTime": 1571222567716, 
+    "name": "tune-clock", 
+    "parentTemplateId": "238c14ab-3d42-46d5-95e3-af16d57f982a", 
+    "projectId": "80789acb-85b0-49ba-a7de-33cd156c3bb2", 
+    "projectName": "SWITCHING", 
+    "rollbackTemplateContent": "", 
+    "rollbackTemplateParams": [], 
+    "softwareType": "IOS-XE", 
+    "softwareVariant": "XE", 
+    "tags": [], 
+    "templateContent": "clock timezone CET 1 0\nclock summer-time CEST recurring last Sun Mar 2:00 last Sun Oct 3:00\n\nntp source Loopback0\n\nip access-list extend ACL-TEST\n remark COMMENT", 
+    "templateParams": []
+}

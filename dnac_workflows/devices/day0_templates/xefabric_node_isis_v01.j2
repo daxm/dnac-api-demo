@@ -1,0 +1,69 @@
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service sequence-numbers
+no platform punt-keepalive disable-kernel-core
+!
+hostname {{ item.value.hostname }}
+!
+vrf definition Mgmt-vrf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret {{ item.value.enable_secret }}
+!
+aaa new-model
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+aaa session-id common
+!
+ip routing
+!
+ip multicast-routing 
+!
+ip pim ssm default
+!
+vtp mode transparent
+!
+no ip domain lookup
+ip domain name {{ item.value.domain_name }}
+!
+!
+system mtu 9100
+!
+username {{ item.value.username }} privilege 15 password {{ item.value.password }}
+!
+!
+{% for key, interface in item.value.interfaces.items() -%}
+{% include '_xefabric_link_isis_v01.j2' %}
+{% endfor %}
+!
+{% include '_xeisis_v01.j2' %}
+!
+ip forward-protocol nd
+ip pim rp-address 1.1.1.1
+ip pim register-source Loopback0
+ip pim ssm default
+no ip http server
+ip http authentication local
+no ip http secure-server
+!ip http client source-interface Loopback0
+!
+crypto key generate rsa modulus 2048
+!
+ip ssh source-interface Loopback0
+ip ssh version 2
+ip scp server enable
+!
+{% include '_xemgmt_v01.j2' %}
+!
+mac address-table notification mac-move
+!
+end

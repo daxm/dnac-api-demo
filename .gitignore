@@ -1,7 +1,7 @@
 # DNA Workflows temporary files
 .modules
 credentials
-example.xlsx
+userdata.xlsx
 
 # Byte-compiled / optimized / DLL files
 .DS_Store

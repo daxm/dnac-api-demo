@@ -1,3 +1,9 @@
+jinja2
+ipaddress
+argparse
 dnacentersdk
-ruamel.yaml
-urllib3
+openpyxl
+jsonschema
+requests
+netaddr
+pyyaml

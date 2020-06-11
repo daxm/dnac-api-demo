@@ -1,0 +1,58 @@
+loaders:
+  - type: python
+processors:
+  - type: filter
+  - type: smart
+  - type: crossref
+renderer:
+  type: mkdocs
+  pages:
+    - title: DNA Workflows
+      name: index
+      source: docs/index.md
+    - title: MKDocs
+      name: MKDocs
+      source: docs/mkdocs.md
+    - title: Modules
+      children:
+        - title: System Settings
+          contents:
+              - system_settings.workflow*
+        - title: Network Settings
+          contents:
+            - network_settings.workflow*
+        - title: Sites
+          contents:
+            - sites.workflow*
+        - title: IP Pool
+          contents:
+            - ip_pool.workflow*
+        - title: Wireless
+          contents:
+            - wireless.workflow*
+        - title: Network Profiles
+          contents:
+            - network_profiles.workflow*
+        - title: Discovery
+          contents:
+            - discovery.workflow*
+        - title: Templates
+          contents:
+            - templates.workflow*
+        - title: Fabric
+          contents:
+            - fabric.workflow*
+        - title: Host Onboarding
+          contents:
+            - host_onboarding.workflow*
+  mkdocs_config:
+    site_name: dnawf_dnac_module_pack
+    site_description: Project Documentation
+    repo_name: GitHub
+    repo_url: https://wwwin-github.cisco.com/cxea/dnawf_dnac_module_pack
+    site_author: Cisco CX
+    theme:
+      name: readthedocs
+    extra_css:
+        - extra.css
+
