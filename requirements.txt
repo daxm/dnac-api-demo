@@ -7,3 +7,4 @@ jsonschema
 requests
 netaddr
 pyyaml
+dna_workflows
