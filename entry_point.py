@@ -23,7 +23,7 @@ def main(config: typing.Dict):
         print(f"Probably wrong host or bad credentials.  Error: {e1}")
         exit(1)
     try:
-        print(api.pnp.get_workflows()[0])
+        print(api.devices.get_device_count())
     except ApiError as e2:
         print(f"Something wrong with your API query.  Error: {e2}")
 
