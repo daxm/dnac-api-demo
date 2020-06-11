@@ -6,8 +6,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir /userdata
-COPY userdata.xlsx /userdata/.
+COPY userdata.xlsx /
 COPY dnac_workflows .
 
-CMD [ "python", "./dna_workflows --build-xlsx /userdata/userdata.xlsx" ]
+CMD [ "python", "./dna_workflows --build-xlsx /userdata.xlsx" ]

@@ -5,12 +5,12 @@ DNA Center.
 ## Quickstart
 1.  Install Docker on your PC.
 1.  Connect your PC into the network that has access to your DNA Center.
-1.  Configure your DNA Center credentials and sample code in config.yml file.
+1.  Configure your DNA Center credentials and sample code in userdata.xlsx file.
 1.  Issue the following commands: (**Note:  You man need to run as Administrator or root.**)
 ```commandline
 docker pull dmickels/dnac-api-demo:latest
 docker stop dnac-api-demo
-docker run --rm --name dnac-api-demo dnac-api-demo:latest
+docker run --rm -it -v userdata.xlsx:/userdata.xlsx --name dnac-api-demo dnac-api-demo:latest
 ```
 
 You can then access DNA Center UI and view your changes.
