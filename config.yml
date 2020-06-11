@@ -1,0 +1,13 @@
+---
+version: 1.0
+
+dnac:
+  host: 100.64.0.101
+  username: admin
+  password: C1sco12345
+
+ip_pools:
+  - network: 10.0.0.0
+    bitmask: 8
+  - network: 11.0.0.0
+    bitmask: 16
