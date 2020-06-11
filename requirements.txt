@@ -1,9 +1,1 @@
-jinja2
-ipaddress
-argparse
 dnacentersdk
-openpyxl
-jsonschema
-requests
-netaddr
-pyyaml
