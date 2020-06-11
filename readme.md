@@ -1,0 +1,15 @@
+# DNA Center API Demo
+The purpose of this repository is to maintain a Dockerfile that runs a Python script that issues some API calls to a
+DNA Center.
+
+## Quickstart
+1.  Install Docker on your PC.
+1.  Connect your PC into the network that has access to your DNA Center.
+1.  Configure your DNA Center credentials and sample code in config.yml file.
+1.  Issue the following commands:
+```commandline
+docker pull dmickels/dnac-api-demo:latest
+docker stop dnac-api-demo
+docker run --rm --name dnac-api-demo dnac-api-demo:latest
+```
+1.  Review the changes in your DNA Center UI.
