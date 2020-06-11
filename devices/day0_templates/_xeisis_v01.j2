@@ -1,0 +1,8 @@
+router isis
+ net {{ item.value.isis_area }}.{{ item.value.system_id_prefix }}{{'.%04d'|format(item.value.index)}}.00
+ domain-password {{ item.value.igp_psk }}
+ metric-style wide
+ log-adjacency-changes
+ nsf ietf
+ bfd all-interfaces
+!

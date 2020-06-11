@@ -1,0 +1,95 @@
+---
+module:
+  name: &module "ip_pool"
+  author: &author "cunningr@cisco.com"
+  default_status: &status "disabled"
+  methods:
+    - {"status": *status, "task": "create_pools", "stage": 1, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Creates IP Pools marked as present"
+    }
+    - {"status": *status, "task": "create_reservations", "stage": 2, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Creates IP Reservations marked as absent"
+    }
+    - {"status": *status, "task": "delete_pools", "stage": 4, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Deletes IP Pools marked as absent"
+    }
+    - {"status": *status, "task": "delete_reservations", "stage": 3, "module": *module, "api": "dnacentersdk",
+         "author": *author,
+         "description": "Deletes IP Reservations marked as absent"
+    }
+    - {"status": *status, "task": "delete_all_reservations", "stage": 98, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Deletes IP Reservations"
+    }
+    - {"status": *status, "task": "delete_all_pools", "stage": 99, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Deletes all IP Pools"
+    }
+  schemas:
+    ip_pool:
+      description: "Used by: create_pools, delete_pools"
+      properties:
+        presence:
+          type: string
+          enum: ['present', 'absent']
+        ipPoolName:
+          type: string
+        ipPoolCidr:
+          type: string
+        gateways:
+          type: string
+        dhcpServerIps:
+          type: string
+        dnsServerIps:
+          type: string
+    ip_reservation:
+      description: "Used by: create_reservations, delete_reservations"
+      properties:
+        presence:
+          type: string
+          enum: ['present', 'absent']
+        groupName:
+          type: string
+        type:
+          type: string
+          enum: ['generic', 'LAN']
+        ipReservation:
+          type: string
+        siteName:
+          type: string
+        ipPoolsParent:
+          type: string
+        gateways:
+          type: string
+        dhcpServerIps:
+          type: string
+        dnsServerIps:
+          type: string
+  data:
+    ip_pool:
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'ipPoolCidr': '172.31.0.0/16', 'ipPoolName': 'IPP_Automation_Underlay', 'presence': 'present'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'ipPoolCidr': '172.16.0.0/16', 'ipPoolName': 'IPP_Overlay', 'presence': 'present'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'ipPoolCidr': 'fd12:3456::/36', 'ipPoolName': 'IPP_IPv6', 'presence': 'present'}
+    ip_reservation:
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.31.1,fd12:3456:089a:31::1', 'groupName': 'IPP_OV_Prod_RCDN6', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.31.0/24,fd12:3456:089a:31::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.32.1,fd12:3456:089a:32::1', 'groupName': 'IPP_OV_Infra_RCDN6', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.32.0/24,fd12:3456:089a:32::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.39.1', 'groupName': 'IPP_OV_GuestNet_RCDN6', 'ipPoolsParent': 'IPP_Overlay', 'ipReservation': '172.16.39.0/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.38.1', 'groupName': 'IPP_OV_EntWireless_RCDN6', 'ipPoolsParent': 'IPP_Overlay', 'ipReservation': '172.16.38.0/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.31.38.1', 'groupName': 'IPP_UL_WirelessAP_RCDN6', 'ipPoolsParent': 'IPP_Automation_Underlay', 'ipReservation': '172.31.38.0/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'groupName': 'IPP_UL_BorderWAN_RCDN6', 'ipPoolsParent': 'IPP_Automation_Underlay,IPP_IPv6', 'ipReservation': '172.31.35.0/26,fd12:3456:089a:0135::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'groupName': 'IPP_UL_LanAuto_RCDN6', 'ipPoolsParent': 'IPP_Automation_Underlay', 'ipReservation': '172.31.33.128/25', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN6', 'type': 'LAN'}
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.33.1', 'groupName': 'IPP_OV_Prod_RCDN5', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.33.0/24,fd12:3456:089a:33::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.34.1', 'groupName': 'IPP_OV_Infra_RCDN5', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.34.0/24,fd12:3456:089a:34::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.39.65', 'groupName': 'IPP_OV_GuestNet_RCDN5', 'ipPoolsParent': 'IPP_Overlay', 'ipReservation': '172.16.39.64/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.38.65', 'groupName': 'IPP_OV_EntWireless_RCDN5', 'ipPoolsParent': 'IPP_Overlay', 'ipReservation': '172.16.38.64/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.31.38.65', 'groupName': 'IPP_UL_WirelessAP_RCDN5', 'ipPoolsParent': 'IPP_Automation_Underlay', 'ipReservation': '172.31.38.64/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'groupName': 'IPP_UL_BorderWAN_RCDN5', 'ipPoolsParent': 'IPP_Automation_Underlay,IPP_IPv6', 'ipReservation': '172.31.35.64/26,fd12:3456:089a:0235::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'groupName': 'IPP_UL_LanAuto_RCDN5', 'ipPoolsParent': 'IPP_Automation_Underlay', 'ipReservation': '172.31.33.0/25', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/RCDN5', 'type': 'LAN'}
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.35.1,fd12:3456:089a:35::1', 'groupName': 'IPP_OV_Prod_FIB', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.35.0/24,fd12:3456:089a:35::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/FIB', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82,fd12:3456:089b:31::82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.36.1,fd12:3456:089a:36::1\t', 'groupName': 'IPP_OV_Infra_FIB', 'ipPoolsParent': 'IPP_Overlay,IPP_IPv6', 'ipReservation': '172.16.36.0/24,fd12:3456:089a:36::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/FIB', 'type': 'generic'}
+      - {'dhcpServerIps': '192.168.31.82', 'dnsServerIps': '192.168.31.82', 'gateways': '172.16.38.129', 'groupName': 'IPP_OV_EntWireless_FIB', 'ipPoolsParent': 'IPP_Overlay', 'ipReservation': '172.16.38.128/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/FIB', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': '172.31.38.129', 'groupName': 'IPP_UL_WirelessAP_FIB', 'ipPoolsParent': 'IPP_Automation_Underlay', 'ipReservation': '172.31.38.128/26', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/FIB', 'type': 'generic'}
+      - {'dhcpServerIps': None, 'dnsServerIps': None, 'gateways': None, 'groupName': 'IPP_UL_BorderWAN_FIB', 'ipPoolsParent': 'IPP_Automation_Underlay,IPP_IPv6', 'ipReservation': '172.31.35.128/26,fd12:3456:089a:0335::/64', 'presence': 'present', 'siteName': 'Global/United States/Texas/Richardson/FIB', 'type': 'generic'}

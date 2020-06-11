@@ -1,0 +1,33 @@
+---
+module:
+  name: &module "border_handoff"
+  author: &author "timotbar@cisco.com"
+  description: "The border_handoff module queries the fabric borders and generates the fusion router configuration"
+  methods:
+    - {"status": "disabled", "task": "get_borders", "stage": 1, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Gets configuration of border devices from table"
+    }
+    - {"status": "disabled", "task": "generate_fusion_configs", "stage": 1, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "description": "Generates the fusion router network and BGP configuration and applies via device template if required"
+    }
+  schemas:
+    border_ip:
+      description: "Used by: get_borders, generate_fusion_configs"
+      properties:
+        fusion1Ip:
+          type: string
+        fusion2Ip:
+          type: string
+        border1Ip:
+          type: string
+        border2Ip:
+          type: string
+        extendVN:
+          type: boolean
+        pushConfig:
+          type: boolean
+  data:
+    border_ip:
+      - {'fusion1Ip': '192.168.0.15', 'fusion2Ip': '', 'border1Ip': '192.168.0.1', 'border2Ip': '192.168.0.2', extendVN: True, pushConfig: True}
