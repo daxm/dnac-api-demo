@@ -1,4 +1,4 @@
-FROM python3:latest
+FROM python:latest
 MAINTAINER Dax Mickelson (dmickels@cisco.com)
 
 WORKDIR /usr/src/app
