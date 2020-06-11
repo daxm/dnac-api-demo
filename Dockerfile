@@ -7,6 +7,6 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY userdata.xlsx /
-COPY dnac_workflows .
+COPY run_dna_workflows.py .
 
-CMD [ "python", "./dna_workflows --build-xlsx /userdata.xlsx" ]
+CMD [ "python", "./run_dna_workflows.py --build-xlsx /userdata.xlsx" ]
