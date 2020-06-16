@@ -10,7 +10,7 @@ DNA Center.
 ```commandline
 docker pull dmickels/dnac-api-demo:latest
 docker stop dnac-api-demo
-docker run --rm -it -v userdata.xlsx:/userdata.xlsx --name dnac-api-demo dnac-api-demo:latest
+docker run --rm -it --name dnac-api-demo dnac-api-demo:latest
 ```
 
 You can then access DNA Center UI and view your changes.

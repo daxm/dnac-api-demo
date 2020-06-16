@@ -112,3 +112,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 /dnawf/.~lock.userdata.xlsx#
+/dnawf/~$userdata.xlsx
