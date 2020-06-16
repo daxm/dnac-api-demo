@@ -1,0 +1,51 @@
+---
+module:
+  name: &module "host_onboarding"
+  author: &author "timotbar@cisco.com"
+  methods:
+    - {"status": "disabled", "task": "assign_pool_to_SSID", "stage": 7, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "documentation": "Assign a wireless pool to SSID"
+    }
+    - {"status": "disabled", "task": "add_port_assignment", "stage": 7, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "documentation": "Sets a port assignment in Host Onboarding"
+    }
+    - {"status": "disabled", "task": "delete_port_assignment", "stage": 10, "module": *module, "api": "dnacentersdk",
+       "author": *author,
+       "documentation": "Clears a port assignment in Host Onboarding"
+    }
+  schemas:
+    wireless_pool:
+      properties:
+        presence:
+          type: string
+          enum: ['present', 'absent']
+        ssid:
+          type: string
+        ipPoolName:
+          type: string
+        virtualNetworkName:
+          type: string
+    ports:
+      properties:
+        presence:
+          type: string
+          enum: ['present', 'absent']
+        portType:
+          type: string
+          enum: ['user', 'ap']
+        deviceIP:
+          type: string
+        interfaceName:
+          type: string
+        siteNameHierachy:
+          type: string
+        dataPoolName:
+          type: string
+        voicePoolName:
+          type: string
+        AuthTemplateName:
+          type: string
+          enum: ['Open Authentication', 'Closed Authentication', 'No Authentication']
+
