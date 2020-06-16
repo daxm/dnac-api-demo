@@ -10,7 +10,12 @@ DNA Center.
 ```commandline
 docker pull dmickels/dnac-api-demo:latest
 docker stop dnac-api-demo
-docker run --rm -it --name dnac-api-demo dnac-api-demo:latest
+docker run --rm --name dnac-api-demo dmickels/dnac-api-demo:latest
 ```
 
 You can then access DNA Center UI and view your changes.
+
+**Note:**  If you have your own XLSX file that you want to use then mount it as /userdata.xlsx:
+```commandline
+docker run --rm --name dnac-api-demo -v your.xlsx:/userdata.xlsx dmickels/dnac-api-demo:latest
+```
