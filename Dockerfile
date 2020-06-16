@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY dnawf/userdata.xlsx /
 COPY dnawf/ .
 
-CMD [ "python", "./run_dna_workflows.py --db /userdata.xlsx" ]
+CMD [ "python", "/usr/src/app/run_dna_workflows.py", "--db", "/userdata.xlsx", "--debug" ]
